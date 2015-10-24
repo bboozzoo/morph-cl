@@ -57,6 +57,30 @@ int main(int argc, char *argv[])
         return -1;
     }
 
+    cv::ocl::setUseOpenCL(use_opencl);
+
+    if (cv::ocl::useOpenCL())
+        cerr << "OpenCL in use" << endl;
+    else
+        cerr << "OpenCL not used" << endl;
+
+    if (cv::ocl::haveOpenCL()) {
+        cerr << "OpenCL available" << endl;
+
+        vector<cv::ocl::PlatformInfo> info;
+        cv::ocl::getPlatfomsInfo(info);
+
+        for (auto p : info) {
+            cerr << "device: "
+                 << p.name()
+                 << ":"
+                 << p.deviceNumber()
+                 << endl;
+        }
+    }
+    else
+        cerr << "OpenCL not available" << endl;
+
     cv::Mat img = cv::imread(input_file.c_str());
     cv::UMat uimg = img.getUMat(cv::ACCESS_READ);
 
