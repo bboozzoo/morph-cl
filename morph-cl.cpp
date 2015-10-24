@@ -1,26 +1,27 @@
 #include <iostream>
+#include <cstdio>
 #include <chrono>
 #include <opencv2/opencv.hpp>
+using namespace std;
 
 class execution_timer
 {
 public:
-    execution_timer(const std::string &message)
+    execution_timer(const string &message)
         : m_message(message) {
-        m_start_time = steady_clock::now();
+        m_start_time = chrono::steady_clock::now();
     }
 
     ~execution_timer() {
-        auto diff = steady_clock::now() - m_start_time;
+        auto diff = chrono::steady_clock::now() - m_start_time;
 
-        double elapsed_seconds = (double)duration_cast<microseconds>(diff).count() / 1e6;
+        double elapsed_seconds = (double)chrono::duration_cast<chrono::microseconds>(diff).count() / 1e6;
 
-        std::fprintf(stdout, "TIME: %s: %f s\n", m_message.c_str(), elapsed_seconds);
-    };
+    }
 
 private:
-    std::chrono::steady_clock::time_point m_start_time;
-    std::string m_message;
+    chrono::steady_clock::time_point m_start_time;
+    string m_message;
 };
 
 
@@ -37,8 +38,8 @@ int main(int argc, char *argv[])
     cv::UMat uimg = img.getUMat(cv::ACCESS_READ);
 
     if (img.empty()) {
-        std::cerr << "failed to load image"
-                  << std::endl;
+        cerr << "failed to load image"
+             << endl;
         return -1;
     }
 
