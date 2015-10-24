@@ -2,7 +2,10 @@
 #include <cstdio>
 #include <chrono>
 #include <opencv2/opencv.hpp>
+#include <boost/program_options.hpp>
+
 using namespace std;
+namespace po = boost::program_options;
 
 class execution_timer
 {
@@ -28,13 +31,33 @@ private:
 int main(int argc, char *argv[])
 {
 
-    if (argc < 2) {
-        std::cerr << "usage: <prog> <image file>"
-                  << std::endl;
+    bool use_opencl;
+    string input_file;
+    unsigned int iteration_count;
+    po::options_description desc("Options");
+
+    desc.add_options()
+        ("help,h", "Show help")
+        ("use-opencl", po::value<bool>(&use_opencl)->default_value(true), "Use OpenCL")
+        ("input-file,i", po::value<string>(&input_file), "Input file")
+        ("iterations", po::value<unsigned int>(&iteration_count)->default_value(10), "Iteration count")
+        ;
+
+    po::variables_map opts;
+    po::store(po::parse_command_line(argc, argv, desc), opts);
+    po::notify(opts);
+
+    if (opts.count("help")) {
+        cerr << desc << endl;
+        return 0;
+    }
+
+    if (opts.count("input-file") == 0) {
+        cerr << "Missing input file, see --help" << endl;
         return -1;
     }
 
-    cv::Mat img = cv::imread(argv[1]);
+    cv::Mat img = cv::imread(input_file.c_str());
     cv::UMat uimg = img.getUMat(cv::ACCESS_READ);
 
     if (img.empty()) {
