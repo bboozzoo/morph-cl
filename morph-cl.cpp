@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
     }
 
     int dilation_type = cv::MORPH_ELLIPSE;
-    int dilation_size = 10;
+    int dilation_size = 2;
     cv::Mat element = cv::getStructuringElement(dilation_type,
                                                 cv::Size(2 * dilation_size + 1,
                                                           2 * dilation_size + 1),
