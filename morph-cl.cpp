@@ -50,8 +50,13 @@ int main(int argc, char *argv[])
         ;
 
     po::variables_map opts;
-    po::store(po::parse_command_line(argc, argv, desc), opts);
-    po::notify(opts);
+    try {
+        po::store(po::parse_command_line(argc, argv, desc), opts);
+        po::notify(opts);
+    } catch (exception &e) {
+        cerr << "failed to parse command line: " << e.what() << endl;
+        return -1;
+    }
 
     if (opts.count("help")) {
         cerr << desc << endl;
