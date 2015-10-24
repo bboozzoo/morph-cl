@@ -107,7 +107,15 @@ int main(int argc, char *argv[])
     cv::UMat uelement = element.getUMat(cv::ACCESS_READ);
 
     cv::UMat out;
-    cv::dilate(img, out, element);
+
+    {
+        execution_timer for_loop("for");
+        for (int i = 0; i < iteration_count; i++)
+        {
+            // execution_timer("single op");
+            cv::dilate(img, out, element);
+        }
+    }
 
     cv::imwrite("dilated.png", out);
 
