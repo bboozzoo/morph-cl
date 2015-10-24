@@ -20,6 +20,11 @@ public:
 
         double elapsed_seconds = (double)chrono::duration_cast<chrono::microseconds>(diff).count() / 1e6;
 
+        cerr << "TIME: "
+             << m_message
+             << ": "
+             << elapsed_seconds
+             << " s" << endl;
     }
 
 private:
