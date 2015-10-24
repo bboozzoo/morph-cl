@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <chrono>
 #include <opencv2/opencv.hpp>
+#include <opencv2/core/ocl.hpp>
 #include <boost/program_options.hpp>
 
 using namespace std;
