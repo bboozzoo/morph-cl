@@ -86,6 +86,8 @@ int main(int argc, char *argv[])
     else
         cerr << "OpenCL not available" << endl;
 
+    cerr << "input file: " << input_file << endl;
+
     cv::Mat img = cv::imread(input_file.c_str());
     cv::UMat uimg = img.getUMat(cv::ACCESS_READ);
 
