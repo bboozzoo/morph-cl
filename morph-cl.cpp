@@ -114,6 +114,11 @@ int main(int argc, char *argv[])
 
     cv::UMat out;
 
+    cerr << "performing "
+         << iteration_count
+         << " iterations"
+         << endl;
+
     {
         execution_timer for_loop("for");
         for (int i = 0; i < iteration_count; i++)
