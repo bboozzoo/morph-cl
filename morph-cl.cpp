@@ -110,6 +110,8 @@ int main(int argc, char *argv[])
                                                           2 * dilation_size + 1),
                                                 cv::Point(dilation_size,
                                                           dilation_size));
+    cv::imwrite("kernel.png", element.mul(255));
+
     cv::UMat uelement = element.getUMat(cv::ACCESS_READ);
 
     cv::UMat out;
