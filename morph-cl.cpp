@@ -109,12 +109,11 @@ int main(int argc, char *argv[])
          << kernel_size
          << endl;
     int dilation_type = cv::MORPH_ELLIPSE;
-    int dilation_size = int(kernel_size / 2)
+    int dilation_size = kernel_size;
     cv::Mat element = cv::getStructuringElement(dilation_type,
-                                                cv::Size(2 * dilation_size + 1,
-                                                          2 * dilation_size + 1),
-                                                cv::Point(dilation_size,
-                                                          dilation_size));
+                                                cv::Size(dilation_size,
+                                                         dilation_size));
+
     cv::imwrite("kernel.png", element.mul(255));
 
     cv::UMat uelement = element.getUMat(cv::ACCESS_READ);
