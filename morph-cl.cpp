@@ -40,12 +40,14 @@ int main(int argc, char *argv[])
     bool use_opencl;
     string input_file;
     unsigned int iteration_count;
+    unsigned int kernel_size;
     po::options_description desc("Options");
 
     desc.add_options()
         ("help,h", "Show help")
         ("use-opencl", po::value<bool>(&use_opencl)->default_value(true), "Use OpenCL")
         ("input-file,i", po::value<string>(&input_file), "Input file")
+        ("kernel-size,k", po::value<unsigned int>(&kernel_size)->default_value(16), "Kernel size")
         ("iterations", po::value<unsigned int>(&iteration_count)->default_value(10), "Iteration count")
         ;
 
@@ -103,8 +105,11 @@ int main(int argc, char *argv[])
         return -1;
     }
 
+    cerr << "kernel size: "
+         << kernel_size
+         << endl;
     int dilation_type = cv::MORPH_ELLIPSE;
-    int dilation_size = 2;
+    int dilation_size = int(kernel_size / 2)
     cv::Mat element = cv::getStructuringElement(dilation_type,
                                                 cv::Size(2 * dilation_size + 1,
                                                           2 * dilation_size + 1),
